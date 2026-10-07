@@ -1,0 +1,112 @@
+@server=http://localhost:4004
+@username=admin
+@password=
+
+
+### Candidates
+# @name Candidates_GET
+GET {{server}}/odata/v4/onboarding/Candidates
+Authorization: Basic {{username}}:{{password}}
+
+
+### Candidates Drafts GET
+# @name Candidates_Drafts_GET
+GET {{server}}/odata/v4/onboarding/Candidates?$filter=(IsActiveEntity eq false)
+Authorization: Basic {{username}}:{{password}}
+
+
+### Candidates Draft POST
+# @name Candidates_Draft_POST
+POST {{server}}/odata/v4/onboarding/Candidates
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "candidateID": 66,
+  "name": "name-26798792",
+  "country": {
+    "code": "452"
+  },
+  "role": {
+    "code": "TESTER"
+  },
+  "status": {
+    "code": "NEW"
+  },
+  "description": "description-26798792",
+  "resumeFileType": "resumeFileType-26798792",
+  "resumeFileName": "resumeFileName-26798792",
+  "createdAt": "2000-04-05T22:00:00.000Z",
+  "createdBy": "createdBy.fye2w@example.com",
+  "modifiedAt": "2001-07-05T22:00:00.000Z",
+  "modifiedBy": "modifiedBy.fye2w@example.com"
+}
+
+
+### Result from POST request above
+@draftID={{Candidates_Draft_POST.response.body.$.ID}}
+
+
+### Candidates Draft PATCH
+# @name Candidates_Draft_Patch
+PATCH {{server}}/odata/v4/onboarding/Candidates(ID={{draftID}},IsActiveEntity=false)
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "candidateID": 66,
+  "name": "name-26798792",
+  "country": {
+    "code": "452"
+  },
+  "role": {
+    "code": "TESTER"
+  },
+  "status": {
+    "code": "NEW"
+  },
+  "description": "description-26798792",
+  "resumeFileType": "resumeFileType-26798792",
+  "resumeFileName": "resumeFileName-26798792",
+  "createdAt": "2000-04-05T22:00:00.000Z",
+  "createdBy": "createdBy.fye2w@example.com",
+  "modifiedAt": "2001-07-05T22:00:00.000Z",
+  "modifiedBy": "modifiedBy.fye2w@example.com"
+}
+
+
+### Candidates Draft Prepare
+# @name Candidates_Draft_Prepare
+POST {{server}}/odata/v4/onboarding/Candidates(ID={{draftID}},IsActiveEntity=false)/OnboardingService.draftPrepare
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{}
+
+
+### Candidates Draft Activate
+# @name Candidates_Draft_Activate
+POST {{server}}/odata/v4/onboarding/Candidates(ID={{draftID}},IsActiveEntity=false)/OnboardingService.draftActivate
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{}
+
+
+### Countries
+# @name Countries_GET
+GET {{server}}/odata/v4/onboarding/Countries
+Authorization: Basic {{username}}:{{password}}
+
+
+### Roles
+# @name Roles_GET
+GET {{server}}/odata/v4/onboarding/Roles
+Authorization: Basic {{username}}:{{password}}
+
+
+### CandidateStatuses
+# @name CandidateStatuses_GET
+GET {{server}}/odata/v4/onboarding/CandidateStatuses
+Authorization: Basic {{username}}:{{password}}
+

@@ -1,0 +1,4 @@
+code,name,descr,criticality
+ACCEPTED,Accepted,Accepted,3
+NEW,New,New,5
+REJECTED,Rejected,Rejected,1
