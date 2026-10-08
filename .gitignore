@@ -15,4 +15,7 @@ mta_archives/
 # Other
 .DS_Store
 
+dist/
+
 @cds-models
+

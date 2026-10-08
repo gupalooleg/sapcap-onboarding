@@ -1,0 +1,31 @@
+{
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.CandidateAdministrator",
+      "description": "CandidateAdministrator"
+    },
+    {
+      "name": "$XSAPPNAME.CandidateViewer",
+      "description": "CandidateViewer"
+    }
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "CandidateAdministrator",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.CandidateAdministrator"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "CandidateViewer",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.CandidateViewer"
+      ],
+      "attribute-references": []
+    }
+  ]
+}

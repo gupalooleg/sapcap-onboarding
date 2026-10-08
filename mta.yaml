@@ -1,0 +1,108 @@
+_schema-version: 3.3.0
+ID: onboarding
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+  deploy_mode: html5-repo
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+modules:
+  - name: onboarding-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      instances: 1
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: onboarding-auth
+      - name: onboarding-db
+
+  - name: onboarding-db-deployer
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: onboarding-db
+
+  - name: onboarding-app-deployer
+    type: com.sap.application.content
+    path: gen
+    build-parameters:
+      build-result: app/
+      requires:
+        - name: onboardingcandidates
+          artifacts:
+            - candidates.zip
+          target-path: app/
+    requires:
+      - name: onboarding-auth
+      - name: srv-api
+      - name: onboarding-app-front
+        parameters:
+          content-target: true
+    parameters:
+      config:
+        destinations:
+          - name: srv-api
+            url: ~{srv-api/srv-url}
+            forwardAuthToken: true
+          - name: ui5
+            url: https://ui5.sap.com
+
+  - name: onboardingcandidates
+    type: html5
+    path: app/candidates
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm ci
+        - npm run build
+      supported-platforms:
+        []
+
+resources:
+  - name: onboarding-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: onboarding-${org}-${space}
+        tenant-mode: dedicated
+        oauth2-configuration:
+          credential-types:
+            - "binding-secret"
+            - "x509"
+        role-collections:
+          - name: 'CandidateAdministrator (onboarding ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.CandidateAdministrator'
+          - name: 'CandidateViewer (onboarding ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.CandidateViewer'
+  - name: onboarding-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+  - name: onboarding-app-front
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: app-front
+      service-plan: developer
