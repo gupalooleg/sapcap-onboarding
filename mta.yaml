@@ -27,6 +27,7 @@ modules:
     requires:
       - name: onboarding-auth
       - name: onboarding-db
+      - name: onboarding-destination
 
   - name: onboarding-db-deployer
     type: hdb
@@ -49,17 +50,21 @@ modules:
     requires:
       - name: onboarding-auth
       - name: srv-api
-      - name: onboarding-app-front
+      - name: onboarding-html5-repo-host
         parameters:
           content-target: true
+          config:
+            HTML5Runtime_enabled: true
     parameters:
       config:
         destinations:
-          - name: srv-api
-            url: ~{srv-api/srv-url}
-            forwardAuthToken: true
-          - name: ui5
-            url: https://ui5.sap.com
+          - Name: srv-api
+            URL: ~{srv-api/srv-url}
+            Authentication: NoAuthentication
+            Type: HTTP
+            ProxyType: Internet
+            ForwardAuthToken: true
+            DynamicDestination: true
 
   - name: onboardingcandidates
     type: html5
@@ -72,6 +77,38 @@ modules:
         - npm run build
       supported-platforms:
         []
+
+  - name: onboarding-destinations
+    type: com.sap.application.content
+    requires:
+      - name: onboarding-auth
+        parameters:
+          service-key:
+            name: onboarding-auth-key
+      - name: onboarding-html5-repo-host
+        parameters:
+          service-key:
+            name: onboarding-html5-repo-host-key
+      - name: srv-api
+      - name: onboarding-destination
+        parameters:
+          content-target: true
+    build-parameters:
+      no-source: true
+    parameters:
+      content:
+        subaccount:
+          existing_destinations_policy: update
+          destinations:
+            - Name: onboarding-html5-repository
+              ServiceInstanceName: onboarding-html5-repo-host
+              ServiceKeyName: onboarding-html5-repo-host-key
+              sap.cloud.service: onboarding.service
+            - Name: onboarding-auth
+              Authentication: OAuth2UserTokenExchange
+              ServiceInstanceName: onboarding-auth
+              ServiceKeyName: onboarding-auth-key
+              sap.cloud.service: onboarding.service
 
 resources:
   - name: onboarding-auth
@@ -101,8 +138,16 @@ resources:
     parameters:
       service: hana
       service-plan: hdi-shared
-  - name: onboarding-app-front
+  - name: onboarding-destination
     type: org.cloudfoundry.managed-service
     parameters:
-      service: app-front
-      service-plan: developer
+      service: destination
+      service-plan: lite
+    requires:
+      - name: srv-api
+
+  - name: onboarding-html5-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host

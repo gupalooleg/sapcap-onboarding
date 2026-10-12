@@ -50,7 +50,9 @@
           "kind": "xsuaa"
         }
       },
-      "app-front": true
+      "destinations": true,
+      "html5-repo": true,
+      "workzone": true
     }
   }
 }
