@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
+    "@cap-js/attachments": "^4.0.0",
     "@cap-js/hana": "^3",
     "@sap/cds": "^10",
     "@sap/cds-common-content": "^3.2.0",
@@ -16,14 +17,16 @@
   },
   "scripts": {
     "start": "cds-serve",
-    "watch-candidates": "cds watch --open ah.onboarding.candidates/index.html?sap-ui-xx-viewCache=false --livereload false"
+    "watch-candidates": "cds watch --open ah.onboarding.candidates/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-employees": "cds watch --open ah.onboarding.employees/index.html?sap-ui-xx-viewCache=false --livereload false"
   },
   "private": true,
   "workspaces": [
     "app/*"
   ],
   "sapux": [
-    "app/candidates"
+    "app/candidates",
+    "app/employees"
   ],
   "imports": {
     "#cds-models/*": "./@cds-models/*/index.js"
@@ -35,12 +38,14 @@
         "users": {
           "admin": {
             "roles": [
-              "CandidateAdministrator"
+              "CandidateAdministrator",
+              "EmployeeAdministrator"
             ]
           },
           "viewer": {
             "roles": [
-              "CandidateViewer"
+              "CandidateViewer",
+              "EmployeeViewer"
             ]
           }
         }

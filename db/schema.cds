@@ -6,6 +6,8 @@ using {
 } from '@sap/cds/common';
 using from '@sap/cds-common-content';
 
+using {Attachments} from '@cap-js/attachments';
+
 namespace ah.onboarding;
 
 entity Candidates : cuid, managed {
@@ -51,4 +53,40 @@ entity Roles : CodeList {
             Developer = 'DEVELOPER';
             Tester = 'TESTER';
         }
+}
+
+entity Employees : cuid, managed {
+    @readonly
+    @odata.Type  : 'Edm.String'
+    employeeID      : Integer;
+
+    @mandatory
+    name            : String;
+
+    @mandatory
+    country         : Country;
+
+    @mandatory
+    @assert.target
+    role            : Association to Roles;
+
+    @mandatory
+    beginDate       : Date;
+
+    @mandatory
+    @assert      : (case
+                        when endDate < beginDate
+                             then 'END_DATE_INVALID'
+                    end)
+    endDate         : Date;
+
+    @mandatory
+    @assert.range: [
+        0,
+        100
+    ]
+    // @assert.range.message: 'ASSERT_RANGE_CUST'
+    performanceRate : Integer default 100;
+
+    attachments     : Composition of many Attachments;
 }
