@@ -27,6 +27,7 @@ modules:
     requires:
       - name: onboarding-auth
       - name: onboarding-db
+      # - name: onboarding-attachments
       - name: onboarding-destination
 
   - name: onboarding-db-deployer
@@ -46,6 +47,10 @@ modules:
         - name: onboardingcandidates
           artifacts:
             - candidates.zip
+          target-path: app/
+        - name: onboardingemployees
+          artifacts:
+            - employees.zip
           target-path: app/
     requires:
       - name: onboarding-auth
@@ -69,6 +74,17 @@ modules:
   - name: onboardingcandidates
     type: html5
     path: app/candidates
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm ci
+        - npm run build
+      supported-platforms:
+        []
+  - name: onboardingemployees
+    type: html5
+    path: app/employees
     build-parameters:
       build-result: dist
       builder: custom
@@ -125,6 +141,14 @@ resources:
             - "binding-secret"
             - "x509"
         role-collections:
+          - name: 'EmployeeAdministrator (onboarding ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.EmployeeAdministrator'
+          - name: 'EmployeeViewer (onboarding ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.EmployeeViewer'
           - name: 'CandidateAdministrator (onboarding ${org}-${space})'
             description: 'generated'
             role-template-references:
@@ -138,6 +162,11 @@ resources:
     parameters:
       service: hana
       service-plan: hdi-shared
+  # - name: onboarding-attachments
+  #   type: org.cloudfoundry.managed-service
+  #   parameters:
+  #     service: objectstore
+  #     service-plan: standard
   - name: onboarding-destination
     type: org.cloudfoundry.managed-service
     parameters:

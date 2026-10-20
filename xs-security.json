@@ -7,6 +7,14 @@
     {
       "name": "$XSAPPNAME.CandidateViewer",
       "description": "CandidateViewer"
+    },
+    {
+      "name": "$XSAPPNAME.EmployeeAdministrator",
+      "description": "EmployeeAdministrator"
+    },
+    {
+      "name": "$XSAPPNAME.EmployeeViewer",
+      "description": "EmployeeViewer"
     }
   ],
   "attributes": [],
@@ -24,6 +32,22 @@
       "description": "generated",
       "scope-references": [
         "$XSAPPNAME.CandidateViewer"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "EmployeeAdministrator",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.EmployeeAdministrator"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "EmployeeViewer",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.EmployeeViewer"
       ],
       "attribute-references": []
     }

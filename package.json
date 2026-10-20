@@ -53,6 +53,13 @@
       "[production]": {
         "auth": {
           "kind": "xsuaa"
+        },
+        "malwareScanner": {
+          "kind": "malwareScanner-mocked"
+        },
+        "attachments": {
+          "kind": "db",
+          "scan": false
         }
       },
       "destinations": true,
