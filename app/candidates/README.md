@@ -7,7 +7,7 @@
 |**Generation Platform**<br>Visual Studio Code|
 |**Template Used**<br>List Report Page V4|
 |**Service Type**<br>Local CAP|
-|**Service URL**<br>http://localhost:4004/odata/v4/onboarding/|
+|**Service URL**<br>http://localhost:4004/odata/v4/candidates/|
 |**Module Name**<br>candidates|
 |**Application Title**<br>Candidates|
 |**Namespace**<br>ah.onboarding|

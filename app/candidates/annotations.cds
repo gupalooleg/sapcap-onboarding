@@ -1,4 +1,4 @@
-using OnboardingService as service from '../../srv/service';
+using CandidatesService as service from '../../srv/candidates-service';
 using from '../../db/schema';
 
 
@@ -34,9 +34,9 @@ annotate service.Candidates with {
 };
 
 annotate service.Candidates with @(
-    UI.CreateHidden                : {$edmJson: {$Path: '/OnboardingService.EntityContainer/UIConfiguration/createHidden'}},
-    UI.UpdateHidden                : {$edmJson: {$Path: '/OnboardingService.EntityContainer/UIConfiguration/updateHidden'}},
-    UI.DeleteHidden                : {$edmJson: {$Path: '/OnboardingService.EntityContainer/UIConfiguration/deleteHidden'}},
+    UI.CreateHidden                : {$edmJson: {$Path: '/CandidatesService.EntityContainer/UIConfiguration/createHidden'}},
+    UI.UpdateHidden                : {$edmJson: {$Path: '/CandidatesService.EntityContainer/UIConfiguration/updateHidden'}},
+    UI.DeleteHidden                : {$edmJson: {$Path: '/CandidatesService.EntityContainer/UIConfiguration/deleteHidden'}},
     Capabilities.FilterRestrictions: {NonFilterableProperties: [resumeFile]},
     Capabilities.SortRestrictions  : {NonSortableProperties: [resumeFile]},
     Capabilities.GroupRestrictions : {NonGroupableProperties: [resumeFile]},

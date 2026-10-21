@@ -1,11 +1,11 @@
-// import { Candidates, UIConfiguration } from "#cds-models/OnboardingService";
+// import { Candidates, UIConfiguration } from "#cds-models/CandidatesService";
 import cds from "@sap/cds";
 
-export class OnboardingService extends cds.ApplicationService {
+export class CandidatesService extends cds.ApplicationService {
   init() {
-    /** @type {import("#cds-models/OnboardingService").Candidates} */
+    /** @type {import("#cds-models/CandidatesService").Candidates} */
     const Candidates = this.entities.Candidates;
-    /** @type {import("#cds-models/OnboardingService").UIConfiguration} */
+    /** @type {import("#cds-models/CandidatesService").UIConfiguration} */
     const UIConfiguration = this.entities.UIConfiguration;
 
     this.before(["CREATE"], Candidates, async (req) => {

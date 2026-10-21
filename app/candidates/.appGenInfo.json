@@ -4,7 +4,7 @@
     "generatorPlatform": "Visual Studio Code",
     "serviceType": "Local CAP",
     "metadataFilename": "",
-    "serviceUrl": "http://localhost:4004/odata/v4/onboarding/",
+    "serviceUrl": "http://localhost:4004/odata/v4/candidates/",
     "appName": "candidates",
     "appTitle": "Candidates",
     "appDescription": "Candidates",

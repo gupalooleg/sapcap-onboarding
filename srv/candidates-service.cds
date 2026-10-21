@@ -4,7 +4,7 @@ using {ah.onboarding as srv} from '../db/schema';
     'CandidateAdministrator',
     'CandidateViewer'
 ]
-service OnboardingService {
+service CandidatesService {
     @odata.draft.enabled
     @restrict: [
         {
