@@ -30,6 +30,7 @@
         "candidates-manage": {
           "semanticObject": "candidates",
           "action": "manage",
+          "title": "{{appTitle}}",
           "signature": {
             "parameters": {},
             "additionalParameters": "allowed"

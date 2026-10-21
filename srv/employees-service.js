@@ -14,8 +14,7 @@ export class EmployeesService extends cds.ApplicationService {
     });
 
     this.on(["READ"], UIConfiguration, async (req) => {
-      // const isAdmin = req.user.is("EmployeeAdministrator");
-      const isAdmin = true;
+      const isAdmin = req.user.is("EmployeeAdministrator");
       return {
         createHidden: !isAdmin,
         updateHidden: !isAdmin,

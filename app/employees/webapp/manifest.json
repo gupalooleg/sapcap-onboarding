@@ -30,6 +30,7 @@
         "employees-manage": {
           "semanticObject": "employees",
           "action": "manage",
+          "title": "{{appTitle}}",
           "signature": {
             "parameters": {},
             "additionalParameters": "allowed"
