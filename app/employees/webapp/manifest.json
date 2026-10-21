@@ -36,6 +36,12 @@
             "additionalParameters": "allowed"
           }
         }
+      },
+      "outbounds": {
+        "candidates": {
+          "semanticObject": "candidates",
+          "action": "manage"
+        }
       }
     }
   },
@@ -133,6 +139,18 @@
                       "settings": {
                         "microChartSize": "XS"
                       }
+                    }
+                  }
+                }
+              },
+              "content": {
+                "header": {
+                  "actions": {
+                    "NavigateToCandidates": {
+                      "press": "ah.onboarding.employees.ext.controller.NavigateToCandidates.navigateToCandidates",
+                      "visible": true,
+                      "enabled": true,
+                      "text": "{i18n>candidates}"
                     }
                   }
                 }

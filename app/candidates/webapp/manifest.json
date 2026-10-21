@@ -36,6 +36,12 @@
             "additionalParameters": "allowed"
           }
         }
+      },
+      "outbounds": {
+        "employees": {
+          "semanticObject": "employees",
+          "action": "manage"
+        }
       }
     }
   },
@@ -134,6 +140,18 @@
                       "filter": true,
                       "group": true,
                       "sort": true
+                    }
+                  }
+                }
+              },
+              "content": {
+                "header": {
+                  "actions": {
+                    "NavigateToEmployees": {
+                      "press": "ah.onboarding.candidates.ext.controller.NavigateToEmployees.navigateToEmployees",
+                      "visible": true,
+                      "enabled": true,
+                      "text": "{i18n>employees}"
                     }
                   }
                 }
