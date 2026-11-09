@@ -16,7 +16,12 @@ service CandidatesService {
             to   : 'CandidateAdministrator'
         }
     ]
-    entity Candidates as projection on srv.Candidates;
+    entity Candidates as projection on srv.Candidates actions {
+        action addAsEmployee() returns Candidates;
+    };
+
+    @readonly
+    entity Employees as projection on srv.Employees;
 
     @odata.singleton
     @readonly

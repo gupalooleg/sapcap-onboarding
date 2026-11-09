@@ -18,6 +18,9 @@ service EmployeesService {
     ]
     entity Employees as projection on srv.Employees;
 
+    @readonly
+    entity Candidates as projection on srv.Candidates;
+
     @odata.singleton
     @readonly
     @cds.persistence.skip

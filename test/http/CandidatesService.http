@@ -1,0 +1,133 @@
+@server=http://localhost:4004
+@username=viewer
+@password=
+
+
+### Candidates
+# @name Candidates_GET
+GET {{server}}/odata/v4/candidates/Candidates
+Authorization: Basic {{username}}:{{password}}
+
+
+### Candidates Drafts GET
+# @name Candidates_Drafts_GET
+GET {{server}}/odata/v4/candidates/Candidates?$filter=(IsActiveEntity eq false)
+Authorization: Basic {{username}}:{{password}}
+
+
+### Candidates Draft POST
+# @name Candidates_Draft_POST
+POST {{server}}/odata/v4/candidates/Candidates
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "name": "name-16170671",
+  "country": {
+    "code": "676"
+  },
+  "role": {
+    "code": "TESTER"
+  },
+  "status": {
+    "code": "NEW"
+  },
+  "description": "description-16170671",
+  "resumeFile": "7o8Tv7nn0pY=",
+  "resumeFileType": "resumeFileType-16170671",
+  "resumeFileName": "resumeFileName-16170671"
+}
+
+
+### Result from POST request above
+@draftID={{Candidates_Draft_POST.response.body.$.ID}}
+
+
+### Candidates Draft PATCH
+# @name Candidates_Draft_Patch
+PATCH {{server}}/odata/v4/candidates/Candidates(ID={{draftID}},IsActiveEntity=false)
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "name": "name-16170671",
+  "country": {
+    "code": "676"
+  },
+  "role": {
+    "code": "TESTER"
+  },
+  "status": {
+    "code": "NEW"
+  },
+  "description": "description-16170671",
+  "resumeFile": "7o8Tv7nn0pY=",
+  "resumeFileType": "resumeFileType-16170671",
+  "resumeFileName": "resumeFileName-16170671",
+  "employee": {
+    "ID": "29095839-2115-48ef-9c31-10664a17062b"
+  }
+}
+
+
+### Candidates Draft Prepare
+# @name Candidates_Draft_Prepare
+POST {{server}}/odata/v4/candidates/Candidates(ID={{draftID}},IsActiveEntity=false)/CandidatesService.draftPrepare
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{}
+
+
+### Candidates Draft Activate
+# @name Candidates_Draft_Activate
+POST {{server}}/odata/v4/candidates/Candidates(ID={{draftID}},IsActiveEntity=false)/CandidatesService.draftActivate
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{}
+
+
+### Candidates addAsEmployee
+# @name Candidates_addAsEmployee_POST
+POST {{server}}/odata/v4/candidates/Candidates(ID=12982a15-6a33-4313-9354-f7347c076f86,IsActiveEntity=true)/CandidatesService.addAsEmployee
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{}
+
+
+### Countries
+# @name Countries_GET
+GET {{server}}/odata/v4/candidates/Countries
+Authorization: Basic {{username}}:{{password}}
+
+
+### Roles
+# @name Roles_GET
+GET {{server}}/odata/v4/candidates/Roles
+Authorization: Basic {{username}}:{{password}}
+
+
+### CandidateStatuses
+# @name CandidateStatuses_GET
+GET {{server}}/odata/v4/candidates/CandidateStatuses
+Authorization: Basic {{username}}:{{password}}
+
+
+### Employees
+# @name Employees_GET
+GET {{server}}/odata/v4/candidates/Employees
+Authorization: Basic {{username}}:{{password}}
+
+
+### ScanStates
+# @name ScanStates_GET
+GET {{server}}/odata/v4/candidates/ScanStates
+Authorization: Basic {{username}}:{{password}}
+
+
+### UIConfiguration
+# @name UIConfiguration_GET
+GET {{server}}/odata/v4/candidates/UIConfiguration
+Authorization: Basic {{username}}:{{password}}

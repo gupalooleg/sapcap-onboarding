@@ -10,6 +10,7 @@ using {Attachments} from '@cap-js/attachments';
 
 namespace ah.onboarding;
 
+// @assert.unique.employee: [employee]
 entity Candidates : cuid, managed {
     @readonly
     @odata.Type                      : 'Edm.String'
@@ -19,12 +20,15 @@ entity Candidates : cuid, managed {
     name           : String;
 
     @mandatory
+    @assert.target
     country        : Country;
 
     @mandatory
+    @assert.target
     role           : Association to Roles;
 
     @mandatory
+    @assert.target
     status         : Association to CandidateStatuses default #New;
 
     description    : String;
@@ -36,6 +40,8 @@ entity Candidates : cuid, managed {
     @Core.IsMediaType
     resumeFileType : String;
     resumeFileName : String;
+    
+    employee: Association to Employees;
 }
 
 entity CandidateStatuses : CodeList {
@@ -89,4 +95,6 @@ entity Employees : cuid, managed {
     performanceRate : Integer default 100;
 
     attachments     : Composition of many Attachments;
+
+    candidate: Association to one Candidates on candidate.employee = $self;
 }

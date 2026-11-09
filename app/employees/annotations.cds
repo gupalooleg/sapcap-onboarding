@@ -4,7 +4,7 @@ using from '../../db/schema';
 annotate service.Employees with {
     
   ID @UI.Hidden;
-  employeeID @title: '{i18n>EmployeeId}';
+  employeeID @title: '{i18n>EmployeeID}';
   name @title: '{i18n>Name}';
   country @title: '{i18n>Country}';
   role @title: '{i18n>Role}';

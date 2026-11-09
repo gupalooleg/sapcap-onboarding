@@ -1,0 +1,195 @@
+@server=http://localhost:4004
+@username=admin
+@password=
+
+
+### Employees
+# @name Employees_GET
+GET {{server}}/odata/v4/employees/Employees
+Authorization: Basic {{username}}:{{password}}
+
+
+### Employees Drafts GET
+# @name Employees_Drafts_GET
+GET {{server}}/odata/v4/employees/Employees?$filter=(IsActiveEntity eq false)
+Authorization: Basic {{username}}:{{password}}
+
+
+### Employees Draft POST
+# @name Employees_Draft_POST
+POST {{server}}/odata/v4/employees/Employees
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "name": "name-25666584",
+  "country": {
+    "code": "523"
+  },
+  "role": {
+    "code": "TESTER"
+  },
+  "beginDate": "2004-06-12",
+  "endDate": "2015-09-23",
+  "performanceRate": 61,
+  "attachments": [
+    {
+      "ID": "12433137-2926-42d9-8ce6-78352c81ec5e",
+      "createdAt": "2008-02-25T00:00:00.000Z",
+      "createdBy": "createdBy.7ehgx@example.net",
+      "modifiedAt": "2013-02-16T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.7ehgx@example.net",
+      "url": "url-12433137",
+      "content": "RnKyNcSVdQc=",
+      "mimeType": "mimeType-12433137",
+      "filename": "filename-12433137",
+      "hash": "hash-12433137",
+      "status": "status-12433137",
+      "lastScan": "2004-05-21T00:00:00.000Z",
+      "statusNav": {
+        "code": "Failed"
+      },
+      "note": "note-12433137"
+    },
+    {
+      "ID": "12433138-320e-4a49-9081-10239e0b0819",
+      "createdAt": "2010-03-09T00:00:00.000Z",
+      "createdBy": "createdBy.7ehgy@example.com",
+      "modifiedAt": "2011-01-24T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.7ehgy@example.com",
+      "url": "url-12433138",
+      "content": "h1pVyVdb6yY=",
+      "mimeType": "mimeType-12433138",
+      "filename": "filename-12433138",
+      "hash": "hash-12433138",
+      "status": "status-12433138",
+      "lastScan": "2016-11-24T00:00:00.000Z",
+      "statusNav": {
+        "code": "Failed"
+      },
+      "note": "note-12433138"
+    }
+  ],
+  "candidate": {
+    "ID": "51067583-4ebe-4616-866b-8586f6645071"
+  }
+}
+
+
+### Result from POST request above
+@draftID={{Employees_Draft_POST.response.body.$.ID}}
+
+
+### Employees Draft PATCH
+# @name Employees_Draft_Patch
+PATCH {{server}}/odata/v4/employees/Employees(ID={{draftID}},IsActiveEntity=false)
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "name": "name-25666584",
+  "country": {
+    "code": "523"
+  },
+  "role": {
+    "code": "TESTER"
+  },
+  "beginDate": "2004-06-12",
+  "endDate": "2015-09-23",
+  "performanceRate": 61,
+  "attachments": [
+    {
+      "ID": "12433137-2926-42d9-8ce6-78352c81ec5e",
+      "createdAt": "2008-02-25T00:00:00.000Z",
+      "createdBy": "createdBy.7ehgx@example.net",
+      "modifiedAt": "2013-02-16T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.7ehgx@example.net",
+      "url": "url-12433137",
+      "content": "RnKyNcSVdQc=",
+      "mimeType": "mimeType-12433137",
+      "filename": "filename-12433137",
+      "hash": "hash-12433137",
+      "status": "status-12433137",
+      "lastScan": "2004-05-21T00:00:00.000Z",
+      "statusNav": {
+        "code": "Failed"
+      },
+      "note": "note-12433137"
+    },
+    {
+      "ID": "12433138-320e-4a49-9081-10239e0b0819",
+      "createdAt": "2010-03-09T00:00:00.000Z",
+      "createdBy": "createdBy.7ehgy@example.com",
+      "modifiedAt": "2011-01-24T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.7ehgy@example.com",
+      "url": "url-12433138",
+      "content": "h1pVyVdb6yY=",
+      "mimeType": "mimeType-12433138",
+      "filename": "filename-12433138",
+      "hash": "hash-12433138",
+      "status": "status-12433138",
+      "lastScan": "2016-11-24T00:00:00.000Z",
+      "statusNav": {
+        "code": "Failed"
+      },
+      "note": "note-12433138"
+    }
+  ],
+  "candidate": {
+    "ID": "51067583-4ebe-4616-866b-8586f6645071"
+  }
+}
+
+
+### Employees Draft Prepare
+# @name Employees_Draft_Prepare
+POST {{server}}/odata/v4/employees/Employees(ID={{draftID}},IsActiveEntity=false)/EmployeesService.draftPrepare
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{}
+
+
+### Employees Draft Activate
+# @name Employees_Draft_Activate
+POST {{server}}/odata/v4/employees/Employees(ID={{draftID}},IsActiveEntity=false)/EmployeesService.draftActivate
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{}
+
+
+### Countries
+# @name Countries_GET
+GET {{server}}/odata/v4/employees/Countries
+Authorization: Basic {{username}}:{{password}}
+
+
+### Roles
+# @name Roles_GET
+GET {{server}}/odata/v4/employees/Roles
+Authorization: Basic {{username}}:{{password}}
+
+
+### ScanStates
+# @name ScanStates_GET
+GET {{server}}/odata/v4/employees/ScanStates
+Authorization: Basic {{username}}:{{password}}
+
+
+### Candidates
+# @name Candidates_GET
+GET {{server}}/odata/v4/employees/Candidates
+Authorization: Basic {{username}}:{{password}}
+
+
+### CandidateStatuses
+# @name CandidateStatuses_GET
+GET {{server}}/odata/v4/employees/CandidateStatuses
+Authorization: Basic {{username}}:{{password}}
+
+
+### UIConfiguration
+# @name UIConfiguration_GET
+GET {{server}}/odata/v4/employees/UIConfiguration
+Authorization: Basic {{username}}:{{password}}

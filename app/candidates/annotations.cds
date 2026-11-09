@@ -30,6 +30,18 @@ annotate service.Candidates with {
     );
     resumeFileName @title: '{i18n>ResumeFileName}';
     resumeFileType @title: '{i18n>ResumeFileType}';
+    employee       @(
+        title                          : '{i18n>EmployeeID}',
+        Common.Text                    : employee.employeeID,
+        Common.Text.@UI.TextArrangement: #TextOnly,
+        Common.FieldControl            : #ReadOnly,
+        Common.SemanticObject          : 'employees',
+        Common.SemanticObjectMapping   : [{
+            $Type                 : 'Common.SemanticObjectMappingType',
+            LocalProperty         : employee_ID,
+            SemanticObjectProperty: 'ID',
+        }, ],
+    );
 
 };
 
@@ -93,6 +105,14 @@ annotate service.Candidates with @(
                 width: '20rem',
             },
         },
+        {
+            $Type             : 'UI.DataField',
+            Value             : employee_ID,
+            @HTML5.CssDefaults: {
+                $Type: 'HTML5.CssDefaultsType',
+                width: '10rem',
+            },
+        },
     ],
     UI.Facets                      : [
         {
@@ -133,6 +153,22 @@ annotate service.Candidates with @(
                 Value      : status_code,
                 Criticality: status.criticality,
             },
+            // {
+            //     $Type         : 'UI.DataFieldWithIntentBasedNavigation',
+            //     Value         : employee.employeeID,
+            //     SemanticObject: 'employees',
+            //     Action        : 'manage',
+            //     Label         : '{i18n>EmployeeID}',
+            //     Mapping       : [{
+            //         $Type                 : 'Common.SemanticObjectMappingType',
+            //         LocalProperty         : employee_ID,
+            //         SemanticObjectProperty: 'ID',
+            //     }, ],
+            // },
+            {
+                $Type: 'UI.DataField',
+                Value: employee_ID,
+            },
         ],
     },
     UI.HeaderInfo                  : {
@@ -168,6 +204,13 @@ annotate service.Candidates with @(
             },
         ],
     },
+    UI.Identification              : [{
+        $Type     : 'UI.DataFieldForAction',
+        Action    : 'CandidatesService.addAsEmployee',
+        Label     : '{i18n>AddAsEmployee}',
+        @UI.Hidden: ($draft.IsActiveEntity =  false
+        or           employee              != null),
+    }, ],
 );
 
 annotate service.Roles with {
@@ -189,4 +232,16 @@ annotate service.Candidates with {
         Common.Text                    : country.name,
         Common.Text.@UI.TextArrangement: #TextOnly,
     )
+};
+
+annotate service.Candidates with actions {
+    addAsEmployee @Common.SideEffects: {
+        $Type           : 'Common.SideEffectsType',
+        TargetProperties: [
+            'in/employee_ID',
+            'in/modifiedAt',
+            'in/modifiedBy',
+            'in/employee/employeeID',
+        ],
+    }
 };
