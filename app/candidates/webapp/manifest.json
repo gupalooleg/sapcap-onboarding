@@ -155,7 +155,8 @@
                     }
                   }
                 }
-              }
+              },
+              "initialLoad": "Enabled"
             }
           }
         },
