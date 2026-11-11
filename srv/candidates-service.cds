@@ -16,19 +16,21 @@ service CandidatesService {
             to   : 'CandidateAdministrator'
         }
     ]
-    entity Candidates as projection on srv.Candidates actions {
-        action addAsEmployee() returns Candidates;
-    };
+    entity Candidates as projection on srv.Candidates
+        actions {
+            action addAsEmployee() returns Candidates;
+        };
 
     @readonly
-    entity Employees as projection on srv.Employees;
+    entity Employees  as projection on srv.Employees;
 
     @odata.singleton
     @readonly
     @cds.persistence.skip
     entity UIConfiguration {
-        createHidden : Boolean;
-        updateHidden : Boolean;
-        deleteHidden : Boolean;
+        createHidden        : Boolean;
+        updateHidden        : Boolean;
+        deleteHidden        : Boolean;
+        addAsEmployeeHidden : Boolean;
     }
 }

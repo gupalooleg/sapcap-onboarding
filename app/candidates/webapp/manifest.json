@@ -186,6 +186,18 @@
           }
         }
       }
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {
+          "sap.fe.templates.ObjectPage.ObjectPageController#ah.onboarding.candidates::CandidatesObjectPage": {
+            "controllerName": "ah.onboarding.candidates.ext.controller.CandidatesObjectPage"
+          },
+          "sap.fe.templates.ListReport.ListReportController#ah.onboarding.candidates::CandidatesList": {
+            "controllerName": "ah.onboarding.candidates.ext.controller.CandidatesList"
+          }
+        }
+      }
     }
   },
   "sap.fiori": {

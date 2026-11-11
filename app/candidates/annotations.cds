@@ -46,9 +46,12 @@ annotate service.Candidates with {
 };
 
 annotate service.Candidates with @(
-    UI.CreateHidden                : {$edmJson: {$Path: '/CandidatesService.EntityContainer/UIConfiguration/createHidden'}},
-    UI.UpdateHidden                : {$edmJson: {$Path: '/CandidatesService.EntityContainer/UIConfiguration/updateHidden'}},
-    UI.DeleteHidden                : {$edmJson: {$Path: '/CandidatesService.EntityContainer/UIConfiguration/deleteHidden'}},
+    // UI.CreateHidden                : {$edmJson: {$Path: '/CandidatesService.EntityContainer/UIConfiguration/createHidden'}},
+    // UI.UpdateHidden                : {$edmJson: {$Path: '/CandidatesService.EntityContainer/UIConfiguration/updateHidden'}},
+    // UI.DeleteHidden                : {$edmJson: {$Path: '/CandidatesService.EntityContainer/UIConfiguration/deleteHidden'}},
+    UI.CreateHidden                : {$edmJson: {$Path: '/UIConfiguration/createHidden'}},
+    UI.UpdateHidden                : {$edmJson: {$Path: '/UIConfiguration/updateHidden'}},
+    UI.DeleteHidden                : {$edmJson: {$Path: '/UIConfiguration/deleteHidden'}},
     Capabilities.FilterRestrictions: {NonFilterableProperties: [resumeFile]},
     Capabilities.SortRestrictions  : {NonSortableProperties: [resumeFile]},
     Capabilities.GroupRestrictions : {NonGroupableProperties: [resumeFile]},
@@ -208,8 +211,18 @@ annotate service.Candidates with @(
         $Type     : 'UI.DataFieldForAction',
         Action    : 'CandidatesService.addAsEmployee',
         Label     : '{i18n>AddAsEmployee}',
-        @UI.Hidden: ($draft.IsActiveEntity =  false
-        or           employee              != null),
+        @UI.Hidden: {$edmJson: {$Or: [
+            {$Path: '/UIConfiguration/addAsEmployeeHidden'},
+            {$Not: {$Path: 'IsActiveEntity'}},
+            {$Ne: [
+                {$Path: 'employee_ID'},
+                {$Null: null}
+            ]},
+        ]}},
+    // @UI.Hidden: ($draft.IsActiveEntity =  false
+    // or           employee              != null
+    // or           ),
+    // },
     }, ],
 );
 
