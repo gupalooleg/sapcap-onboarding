@@ -166,10 +166,29 @@
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/Employees"
+              "contextPath": "/Employees",
+              "content": {
+                "body": {
+                  "sections": {
+                    "Comments": {
+                      "template": "ah.onboarding.employees.ext.fragment.Comments",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "i18nGeneralInfo"
+                      },
+                      "title": "{i18n>comments}"
+                    }
+                  }
+                }
+              }
             }
           }
         }
+      }
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {}
       }
     }
   },

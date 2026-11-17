@@ -40,8 +40,8 @@ entity Candidates : cuid, managed {
     @Core.IsMediaType
     resumeFileType : String;
     resumeFileName : String;
-    
-    employee: Association to Employees;
+
+    employee       : Association to Employees;
 }
 
 entity CandidateStatuses : CodeList {
@@ -96,5 +96,14 @@ entity Employees : cuid, managed {
 
     attachments     : Composition of many Attachments;
 
-    candidate: Association to one Candidates on candidate.employee = $self;
+    candidate       : Association to one Candidates
+                          on candidate.employee = $self;
+
+    comments        : Composition of many EmployeeComments
+                          on comments.employee = $self;
+}
+
+entity EmployeeComments : cuid, managed {
+    employee : Association to Employees;
+    text     : LargeString;
 }

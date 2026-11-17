@@ -1,0 +1,41 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:macros="sap.fe.macros"
+>
+    <VBox
+        id="VBox"
+        core:require="{ handler: 'ah/onboarding/employees/ext/fragment/Comments'}"
+    >
+        <FeedInput
+            id="idCommentsFeedInput"
+            value="{= ${ui>/isEditable} ? '' : ''}"
+            visible="{ui>/isEditable}"
+            post="handler.onCommentsFeedInputPost"
+        />
+        <List
+            id="idCommenstList"
+            growing="true"
+            growingThreshold="3"
+            showNoData="false"
+            items="{path: 'comments', parameters: {$$ownRequest: true, $count: true}, sorter: {path: 'createdAt', descending: true}}"
+        >
+            <FeedListItem
+                id="idCommentsFeedListItem"
+                sender="{createdBy}"
+                text="{text}"
+                timestamp="{createdAt}"
+            >
+                <actions>
+                    <FeedListItemAction
+                        id="idDeleteFeedListItemAction"
+                        key="delete"
+                        visible="{ui>/isEditable}"
+                        text="{i18n>delete}"
+                        press="handler.onDeleteFeedListItemAction"
+                    />
+                </actions>
+            </FeedListItem>
+        </List>
+    </VBox>
+</core:FragmentDefinition>
