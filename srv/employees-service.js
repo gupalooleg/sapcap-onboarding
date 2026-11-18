@@ -7,6 +7,11 @@ export class EmployeesService extends cds.ApplicationService {
     const Employees = this.entities.Employees;
 
     const Candidates = this.entities.Candidates;
+
+    const EmployeeComments = this.entities.EmployeeComments;
+
+    const Attachments = this.entities["Employees.attachments"];
+
     /** @type {import("#cds-models/EmployeesService").UIConfiguration} */
     const UIConfiguration = this.entities.UIConfiguration;
 
@@ -18,7 +23,7 @@ export class EmployeesService extends cds.ApplicationService {
     this.before(["DELETE"], Employees, async (req) => {
       const employeeID = req.data.ID;
 
-      await UPDATE(Candidates).where({employee_ID: employeeID}).with({employee_ID: null});      
+      await UPDATE(Candidates).where({ employee_ID: employeeID }).with({ employee_ID: null });
     });
 
     this.on(["READ"], UIConfiguration, async (req) => {
@@ -30,6 +35,21 @@ export class EmployeesService extends cds.ApplicationService {
       };
     });
 
+    this.after(["CREATE", "DELETE"], EmployeeComments.drafts, async (_, req) => {
+      const id = req.data.employee_ID;
+      await this.#updateEmployeeDraftModifiedAt(id, req.timestamp);
+    });
+
+    this.after(["CREATE", "UPDATE", "DELETE"], Attachments.drafts, async (_, req) => {
+      const id = req.data.up__ID;
+      await this.#updateEmployeeDraftModifiedAt(id, req.timestamp);
+    });
+
     return super.init();
+  }
+
+  async #updateEmployeeDraftModifiedAt(id, modifiedAt) {
+    const Employees = this.entities.Employees;
+    await UPDATE(Employees.drafts, id).set({ modifiedAt });
   }
 }

@@ -49,20 +49,20 @@ annotate service.Candidates with @(
     // UI.CreateHidden                : {$edmJson: {$Path: '/CandidatesService.EntityContainer/UIConfiguration/createHidden'}},
     // UI.UpdateHidden                : {$edmJson: {$Path: '/CandidatesService.EntityContainer/UIConfiguration/updateHidden'}},
     // UI.DeleteHidden                : {$edmJson: {$Path: '/CandidatesService.EntityContainer/UIConfiguration/deleteHidden'}},
-    UI.CreateHidden                : {$edmJson: {$Path: '/UIConfiguration/createHidden'}},
-    UI.UpdateHidden                : {$edmJson: {$Path: '/UIConfiguration/updateHidden'}},
-    UI.DeleteHidden                : {$edmJson: {$Path: '/UIConfiguration/deleteHidden'}},
-    Capabilities.FilterRestrictions: {NonFilterableProperties: [resumeFile]},
-    Capabilities.SortRestrictions  : {NonSortableProperties: [resumeFile]},
-    Capabilities.GroupRestrictions : {NonGroupableProperties: [resumeFile]},
-    UI.SelectionFields             : [
+    UI.CreateHidden                                : {$edmJson: {$Path: '/UIConfiguration/createHidden'}},
+    UI.UpdateHidden                                : {$edmJson: {$Path: '/UIConfiguration/updateHidden'}},
+    UI.DeleteHidden                                : {$edmJson: {$Path: '/UIConfiguration/deleteHidden'}},
+    Capabilities.FilterRestrictions                : {NonFilterableProperties: [resumeFile]},
+    Capabilities.SortRestrictions                  : {NonSortableProperties: [resumeFile]},
+    Capabilities.GroupRestrictions                 : {NonGroupableProperties: [resumeFile]},
+    UI.SelectionFields                             : [
         candidateID,
         name,
         country_code,
         role_code,
         status_code,
     ],
-    UI.LineItem                    : [
+    UI.LineItem                                    : [
         {
             $Type             : 'UI.DataField',
             Value             : candidateID,
@@ -117,7 +117,7 @@ annotate service.Candidates with @(
             },
         },
     ],
-    UI.Facets                      : [
+    UI.Facets                                      : [
         {
             $Type : 'UI.ReferenceFacet',
             Label : '{i18n>GeneralInfo}',
@@ -131,7 +131,7 @@ annotate service.Candidates with @(
             Target: '@UI.FieldGroup#i18nSystemInfo',
         },
     ],
-    UI.FieldGroup #i18nGeneralInfo : {
+    UI.FieldGroup #i18nGeneralInfo                 : {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
@@ -174,7 +174,7 @@ annotate service.Candidates with @(
             },
         ],
     },
-    UI.HeaderInfo                  : {
+    UI.HeaderInfo                                  : {
         Title         : {
             $Type: 'UI.DataField',
             Value: name,
@@ -186,7 +186,7 @@ annotate service.Candidates with @(
             Value: candidateID,
         },
     },
-    UI.FieldGroup #i18nSystemInfo  : {
+    UI.FieldGroup #i18nSystemInfo                  : {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
@@ -207,7 +207,7 @@ annotate service.Candidates with @(
             },
         ],
     },
-    UI.Identification              : [{
+    UI.Identification                              : [{
         $Type     : 'UI.DataFieldForAction',
         Action    : 'CandidatesService.addAsEmployee',
         Label     : '{i18n>AddAsEmployee}',
@@ -224,6 +224,14 @@ annotate service.Candidates with @(
     // or           ),
     // },
     }, ],
+    Common.SideEffects #UpdateCandidateModifiedInfo: {
+        $Type           : 'Common.SideEffectsType',
+        SourceEntities  : [''],
+        TargetProperties: [
+            'modifiedBy',
+            'modifiedAt',
+        ],
+    },
 );
 
 annotate service.Roles with {
